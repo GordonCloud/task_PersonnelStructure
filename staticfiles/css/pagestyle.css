@@ -1,0 +1,25 @@
+ .hiddenRow {
+       display: none;
+    }
+    .orderTotal {
+       padding: 10px;
+       background-color: #fdfbe4;
+       width: 95%;
+       margin: 0 auto;
+    }
+    .orderTotal h4 {
+       font-weight: bold;
+    }
+    .totalOrder {
+       color: #ee7a23;
+       font-weight: bold;
+       font-size: 18px;
+    }
+    .totalAmount {
+       font-weight: bold;
+       font-size: 18px;
+    }
+
+.margintop20px {
+    margin-top: 20px;
+}
