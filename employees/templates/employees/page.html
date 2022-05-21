@@ -16,33 +16,43 @@
 <body>
     <div class="container margintop20px">
         <h1>ОАО "Маркиса Де Коте"</h1>
-        <p>Директор фирмы: Иванов Иван Иванович</p>
+        <p>Директор фирмы: {{employee_director}}</p>
     </div>
 
-    <div class="orderTotal">
-   <h4>Order Total:</h4>
+<div class="orderTotal">
+    <h4>Кадровая структура организации:</h4>
 
-<table id="tableOrderTotal" class="table tableTotal">
-    <tbody>
-        <tr>
-            <td>Item1</td>
-            <td class="price-1">50</td>
-        </tr>
-        <tr id='hiddenRowExample' class="hiddenRow">
-            <td>Item2</td>
-            <td class="price-2">13</td>
-        </tr>
-        <tr>
-            <td>Item3</td>
-            <td class="price-3">30</td>
-        </tr>
-        <tr class="summary">
-            <td class="totalOrder">Total:</td>
-            <td id="result" class="totalAmount"></td>
-        </tr>
+    {% if second_level_employees %}
+    <table id="tableOrderTotal" class="table tableTotal">
+        <tbody>
+            <tr>
+                <td><p>ФИО</p></td>
+                <td><p>Должность</p></td>
+                <td><p>Дата принятия</p></td>
+                <td><p>Зарплата</p></td>
+            </tr>
+            {% for employee in second_level_employees %}
+            <tr>
+                <td>{{employee}}</td>
+                <td>{{employee.position}}</td>
+                <td>{{employee.employment_date}}</td>
+                <td>{{employee.salary}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>ERROR: No employees found</p>
+    {% endif %}
 
-    </tbody>
-</table>
+    <table>
+        <tbody>
+            <tr id='hiddenRowExample' class="hiddenRow">
+                <td>Item2</td>
+                <td class="price-2">13</td>
+            </tr>
+        </tbody>
+    </table>
     <button id='toggle' class='btn btn-primary'>
         Toggle
         <script>
