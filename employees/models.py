@@ -12,4 +12,5 @@ class Employee(models.Model):
     manager = models.ForeignKey('self', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.first_name
+        return self.last_name + " " + self.first_name +\
+               " " + self.middle_name
