@@ -66,7 +66,7 @@ class Command(BaseCommand):
             faked_first_name = fake.first_name_female()
             faked_last_name = fake.last_name_female()
             faked_middle_name = fake.middle_name_female()
-        random_names = [faked_first_name, faked_middle_name, faked_last_name]
+        random_names = [faked_first_name, faked_last_name, faked_middle_name]
         return random_names
 
     def create_faked_employees(self, position, min_salary, max_salary,
