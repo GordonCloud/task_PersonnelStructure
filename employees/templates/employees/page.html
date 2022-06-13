@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container margintop20px">
-        <h1>ОАО "Маркиса Де Коте"</h1>
+        <h1>{{firm_name}}</h1>
         <p>Директор фирмы: {{employee_director}}</p>
     </div>
 
@@ -44,27 +44,9 @@
     {% else %}
         <p>ERROR: No employees found</p>
     {% endif %}
-
-    <table>
-        <tbody>
-            <tr id='hiddenRowExample' class="hiddenRow">
-                <td>Item2</td>
-                <td class="price-2">13</td>
-            </tr>
-        </tbody>
-    </table>
-    <button id='toggle' class='btn btn-primary'>
-        Toggle
-        <script>
-            toggle.onclick = function() {
-                hiddenRowExample.classList.remove('hiddenRow');
-                <!--Вместо remove поставить toggle для переключения вкл/выкл-->
-            };
-        </script>
-    </button>
 </div>
 
-
+    {{ employee_tree|unordered_list }}
 
     <!--===============================================================================================-->
 	<script type="text/javascript" src={% static "js/hideElements.js" %}></script>
