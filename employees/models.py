@@ -25,11 +25,12 @@ class Employee(models.Model):
         for employee in second_level_queryset:
             cls.employees_tree.append(employee)
             manager = employee
-            cls.add_subordinates_to_tree(manager=manager)
+            cls._add_subordinates_to_tree(manager=manager)
+        return cls.employees_tree
 
     @classmethod
-    def add_subordinates_to_tree(cls, manager):
+    def _add_subordinates_to_tree(cls, manager):
         subordinates = cls.objects.filter(manager=manager)[:5]
         for employee in subordinates:
             cls.employees_tree.append(employee)
-            cls.add_subordinates_to_tree(employee)
+            cls._add_subordinates_to_tree(employee)
