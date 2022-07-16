@@ -22,22 +22,25 @@
 <div class="orderTotal">
     <h4>Кадровая структура организации:</h4>
 
-    {% if second_level_employees %}
+    {% if employee_tree %}
     <table id="tableOrderTotal" class="table tableTotal">
         <tbody>
+            {% load employees_extras %}
             <tr>
                 <td><p>ФИО</p></td>
                 <td><p>Должность</p></td>
                 <td><p>Дата принятия</p></td>
                 <td><p>Зарплата</p></td>
             </tr>
-            {% for employee in second_level_employees %}
-            <tr>
+            {% for employee in employee_tree %}
+            {% with color_index=employee.hierarchy_level %}
+            <tr bgcolor={{tr_tag_colors|index:color_index}}>
                 <td>{{employee}}</td>
                 <td>{{employee.position}}</td>
                 <td>{{employee.employment_date}}</td>
                 <td>{{employee.salary}}</td>
             </tr>
+            {% endwith %}
             {% endfor %}
         </tbody>
     </table>
@@ -45,8 +48,6 @@
         <p>ERROR: No employees found</p>
     {% endif %}
 </div>
-
-    {{ employee_tree|unordered_list }}
 
     <!--===============================================================================================-->
 	<script type="text/javascript" src={% static "js/hideElements.js" %}></script>
