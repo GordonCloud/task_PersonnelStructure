@@ -7,7 +7,7 @@ tr_tag_colors = [
     "gold",
     "gold",
     "gold",
-    "aquamarine",
+    "PowderBlue",
     "MediumPurple",
     "RosyBrown",
     "LightGreen",
@@ -18,7 +18,10 @@ tr_tag_colors = [
 
 def page(request):
     employee_director = Employee.objects.get(hierarchy_level=1)
-    employee_tree = Employee.get_tree()
+    if not Employee.employees_tree:
+        employee_tree = Employee.get_tree()
+    else:
+        employee_tree = Employee.employees_tree
     template = loader.get_template('employees/page.html')
     context = {
         'employee_director': employee_director,
