@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees.info</title>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="\static\css\pagestyle.css">
+</head>
+<body>
+    <div class="container margintop20px">
+        <h1>{{firm_name}}</h1>
+        <p>Директор фирмы: {{employee_director}}</p>
+    </div>
+
+<div class="orderTotal">
+    <h4>ПОИСК СОТРУДНИКОВ:</h4>
+
+    {% if employee_tree %}
+    <table id="tableOrderTotal" class="table tableTotal">
+        <tbody>
+            <tr>
+                <td><p>ФИО</p></td>
+                <td><p>Должность</p></td>
+                <td><p>Дата принятия</p></td>
+                <td><p>Зарплата</p></td>
+            </tr>
+            {% for employee in employee_tree %}
+            <tr>
+                <td>{{employee}}</td>
+                <td>{{employee.position}}</td>
+                <td>{{employee.employment_date}}</td>
+                <td>{{employee.salary}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>ERROR: No employees found</p>
+    {% endif %}
+</div>
+
+    <!--===============================================================================================-->
+	<script type="text/javascript" src={% static "js/hideElements.js" %}></script>
+
+</body>
+</html>
