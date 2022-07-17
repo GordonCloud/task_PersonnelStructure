@@ -34,3 +34,7 @@ class Employee(models.Model):
         for employee in subordinates:
             cls.employees_tree.append(employee)
             cls._add_subordinates_to_tree(employee)
+
+    @classmethod
+    def clear_tree(cls):
+        cls.employees_tree.clear()
