@@ -34,12 +34,24 @@
             </tr>
             {% for employee in employee_tree %}
             {% with color_index=employee.hierarchy_level %}
-            <tr bgcolor={{tr_tag_colors|index:color_index}}>
+            <tr id="employee_{{employee.pk}}" class="manager_{{employee.manager.pk}}" bgcolor={{tr_tag_colors|index:color_index}}>
                 <td>{{employee}}</td>
                 <td>{{employee.position}}</td>
                 <td>{{employee.employment_date}}</td>
                 <td>{{employee.salary}}</td>
             </tr>
+            <script>
+                if ({{employee.hierarchy_level}} > 3) {
+                    employee_{{employee.pk}}.classList.add('hiddenRow');
+                }
+
+                employee_{{employee.pk}}.onclick = function() {
+                    let children = tableOrderTotal.getElementsByClassName("manager_{{employee.pk}}");
+                    Array.prototype.forEach.call(children, (item) => {
+                        item.classList.toggle('hiddenRow');
+                    });
+                };
+            </script>
             {% endwith %}
             {% endfor %}
         </tbody>
