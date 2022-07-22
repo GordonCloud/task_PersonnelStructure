@@ -20,6 +20,10 @@
        font-size: 18px;
     }
 
+.cursorPointer {
+    cursor: pointer;
+}
+
 .margintop20px {
     margin-top: 20px;
 }

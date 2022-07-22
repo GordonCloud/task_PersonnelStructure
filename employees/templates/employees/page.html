@@ -12,6 +12,7 @@
 
     {% load static %}
     <link rel="stylesheet" href="\static\css\pagestyle.css">
+    <script type="text/javascript" src={% static "js/hideElements.js" %}></script>
 </head>
 <body>
     <div class="container margintop20px">
@@ -34,7 +35,7 @@
             </tr>
             {% for employee in employee_tree %}
             {% with color_index=employee.hierarchy_level %}
-            <tr id="employee_{{employee.pk}}" class="manager_{{employee.manager.pk}}" bgcolor={{tr_tag_colors|index:color_index}}>
+            <tr id="employee_{{employee.pk}}" class="manager_{{employee.manager.pk}} cursorPointer" bgcolor={{tr_tag_colors|index:color_index}}>
                 <td>{{employee}}</td>
                 <td>{{employee.position}}</td>
                 <td>{{employee.employment_date}}</td>
@@ -43,13 +44,22 @@
             <script>
                 if ({{employee.hierarchy_level}} > 3) {
                     employee_{{employee.pk}}.classList.add('hiddenRow');
-                }
+                };
+
+                if ({{employee.hierarchy_level}} == 2) {
+                    employee_{{employee.pk}}.classList.add('opened');
+                };
 
                 employee_{{employee.pk}}.onclick = function() {
-                    let children = tableOrderTotal.getElementsByClassName("manager_{{employee.pk}}");
-                    Array.prototype.forEach.call(children, (item) => {
-                        item.classList.toggle('hiddenRow');
-                    });
+                    if (employee_{{employee.pk}}.classList.contains('opened')) {
+                        employee_{{employee.pk}}.classList.remove('opened');
+                        let children = tableOrderTotal.getElementsByClassName("manager_{{employee.pk}}");
+                        hideAllChildren(children);
+                    } else {
+                        employee_{{employee.pk}}.classList.add('opened');
+                        let children = tableOrderTotal.getElementsByClassName("manager_{{employee.pk}}");
+                        unhideAllChildren(children);
+                    };
                 };
             </script>
             {% endwith %}
