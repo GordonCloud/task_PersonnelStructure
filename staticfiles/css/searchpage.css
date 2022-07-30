@@ -1,0 +1,53 @@
+.hiddenRow {
+   display: none;
+}
+.orderTotal {
+   padding: 10px;
+   background-color: #fdfbe4;
+   width: 95%;
+   margin: 0 auto;
+}
+.orderTotal h4 {
+   font-weight: bold;
+}
+.totalOrder {
+   color: #ee7a23;
+   font-weight: bold;
+   font-size: 18px;
+}
+.totalAmount {
+   font-weight: bold;
+   font-size: 18px;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.employeesTablePlace {
+    padding: 10px;
+    background-color: #fdfbe4;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.employeesTableColumn {
+    width: 16.67%;
+}
+
+.margintop20px {
+    margin-top: 20px;
+}
+
+.paddingtop0px {
+    padding-top: 0px;
+}
+
+.paddingbottom0px {
+    padding-bottom: 0px;
+}
+
+.marginbottom0px {
+    margin-bottom: 0px;
+}
+

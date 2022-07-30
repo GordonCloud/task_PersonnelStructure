@@ -4,39 +4,88 @@
     <meta charset="UTF-8">
     <title>Employees.info</title>
 
-    <!-- CSS only -->
+    <!-- CSS bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-    <!-- JavaScript Bundle with Popper -->
+    <!-- JavaScript bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
+    <!-- JavaScript JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     {% load static %}
-    <link rel="stylesheet" href="\static\css\pagestyle.css">
+    <link rel="stylesheet" href="\static\css\searchpage.css">
+
+    <script type="text/javascript">
+        $(function(){
+
+            $('#searchEmployeesForm').submit(function(formData){
+                formData.preventDefault();
+                var searchText = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'post_searchform' %}",
+                    data: searchText,
+                    success: function(result){
+                        $('#employeesScroll').html(result);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container margintop20px">
         <h1>{{firm_name}}</h1>
         <p>Директор фирмы: {{employee_director}}</p>
+        <a href="{% url 'mainpage' %}">
+            <button type="button" class="btn btn-success btn-lg">На главную</button>
+        </a>
     </div>
 
-<div class="orderTotal">
+<div class="employeesTablePlace margintop20px paddingbottom0px">
     <h4>ПОИСК СОТРУДНИКОВ:</h4>
 
     {% if employee_tree %}
-    <table id="tableOrderTotal" class="table tableTotal">
+    <table id="tableHead" class="table tableTotal marginbottom0px">
         <tbody>
             <tr>
-                <td><p>ФИО</p></td>
-                <td><p>Должность</p></td>
-                <td><p>Дата принятия</p></td>
-                <td><p>Зарплата</p></td>
+                <td class="employeesTableColumn"><p>Фамилия</p></td>
+                <td class="employeesTableColumn"><p>Имя</p></td>
+                <td class="employeesTableColumn"><p>Отчество</p></td>
+                <td class="employeesTableColumn"><p>Должность</p></td>
+                <td class="employeesTableColumn"><p>Дата принятия</p></td>
+                <td class="employeesTableColumn"><p>Зарплата</p></td>
             </tr>
+            {% csrf_token %}
+            <form id="zhopa">
+                {{ SearchForm.as_table }}
+            </form>
+            <form id="searchEmployeesForm">
+                <tr>
+                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                </tr>
+                <tr><td><input type="submit" value="ПОИСК"></td></tr>
+            </form>
+        </tbody>
+    </table>
+</div>
+<div id="employeesScroll" class="employeesTablePlace paddingtop0px">
+    <table id="tableOrderTotal" class="table tableTotal">
+        <tbody>
             {% for employee in employee_tree %}
             <tr>
-                <td>{{employee}}</td>
-                <td>{{employee.position}}</td>
-                <td>{{employee.employment_date}}</td>
-                <td>{{employee.salary}}</td>
+                <td class="employeesTableColumn">{{employee.last_name}}</td>
+                <td class="employeesTableColumn">{{employee.first_name}}</td>
+                <td class="employeesTableColumn">{{employee.middle_name}}</td>
+                <td class="employeesTableColumn">{{employee.position}}</td>
+                <td class="employeesTableColumn">{{employee.employment_date}}</td>
+                <td class="employeesTableColumn">{{employee.salary}}</td>
             </tr>
             {% endfor %}
         </tbody>
