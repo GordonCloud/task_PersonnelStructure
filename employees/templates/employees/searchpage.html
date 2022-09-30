@@ -16,7 +16,7 @@
     {% load static %}
     <link rel="stylesheet" href="\static\css\searchpage.css">
 
-    <script type="text/javascript">
+   <script type="text/javascript">
         $(function(){
 
             $('#searchEmployeesForm').submit(function(formData){
@@ -57,18 +57,15 @@
                 <td class="employeesTableColumn"><p>Дата принятия</p></td>
                 <td class="employeesTableColumn"><p>Зарплата</p></td>
             </tr>
-            {% csrf_token %}
-            <form id="zhopa">
-                {{ SearchForm.as_table }}
-            </form>
-            <form id="searchEmployeesForm">
+            <form id="searchEmployeesForm" action="{% url 'post_searchform' %}" method="post">
                 <tr>
-                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
-                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
-                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
-                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
-                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
-                    <td class="employeesTableColumn"><input type="text" name="searchEmplyeesFormInput"></td>
+                    <td class="employeesTableColumn">{{ searchform.last_name }}</td>
+                    <td class="employeesTableColumn">{{ searchform.first_name }}</td>
+                    <td class="employeesTableColumn">{{ searchform.middle_name }}</td>
+                    <td class="employeesTableColumn">{{ searchform.position }}</td>
+                    <td class="employeesTableColumn">{{ searchform.employment_date }}</td>
+                    <td class="employeesTableColumn">{{ searchform.salary }}</td>
+                    {% csrf_token %}
                 </tr>
                 <tr><td><input type="submit" value="ПОИСК"></td></tr>
             </form>
