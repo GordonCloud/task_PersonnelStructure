@@ -29,10 +29,12 @@
     background-color: #fdfbe4;
     width: 95%;
     margin: 0 auto;
+    min-width: 1230px;
 }
 
 .employeesTableColumn {
     width: 16.67%;
+    min-width: 205px;
 }
 
 .margintop20px {
