@@ -1,3 +1,7 @@
+"""
+ПРЕДУПРЕЖДЕНИЕ: ПРОЦЕСС МОЖЕТ ВЫПОЛНЯТЬСЯ ДОЛГО!
+"""
+
 import random
 import sys
 from datetime import date
