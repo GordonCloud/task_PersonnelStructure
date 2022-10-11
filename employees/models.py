@@ -13,28 +13,48 @@ class Employee(models.Model):
     hierarchy_level = models.IntegerField(default=5)
     manager = models.ForeignKey('self', null=True, on_delete=models.SET_NULL)
 
-    employees_tree = []
-
     def __str__(self):
         return self.last_name + " " + self.first_name + \
                " " + self.middle_name
 
-    @classmethod
-    def get_tree(cls):
-        second_level_queryset = cls.objects.filter(hierarchy_level=2)
-        for employee in second_level_queryset:
-            cls.employees_tree.append(employee)
+
+class EmployeeTree:
+    full_tree = []
+
+    def __init__(self, employees):
+        self._employees = employees
+        self.employees_tree = []
+
+        self.get_tree()
+
+    def get_tree(self):
+        upper_level_employees_list = self._get_upper_lvl_from_queryset()
+        for employee in upper_level_employees_list:
+            self.employees_tree.append(employee)
             manager = employee
-            cls._add_subordinates_to_tree(manager=manager)
-        return cls.employees_tree
+            self._add_subordinates_to_tree(manager=manager)
+        return self.employees_tree
 
-    @classmethod
-    def _add_subordinates_to_tree(cls, manager):
-        subordinates = cls.objects.filter(manager=manager)[:5]
-        for employee in subordinates:
-            cls.employees_tree.append(employee)
-            cls._add_subordinates_to_tree(employee)
+    def _get_upper_lvl_from_queryset(self):
+        upper_lvl = int(100)
+        upper_level_employees_list = []
+        for employee in self._employees:
+            if employee.hierarchy_level > upper_lvl:
+                pass
+            elif employee.hierarchy_level == upper_lvl:
+                upper_level_employees_list.append(employee)
+            else:
+                upper_level_employees_list.clear()
+                upper_level_employees_list.append(employee)
+                upper_lvl = employee.hierarchy_level
+        return upper_level_employees_list
 
-    @classmethod
-    def clear_tree(cls):
-        cls.employees_tree.clear()
+    def _add_subordinates_to_tree(self, manager):
+        subordinates = list(Employee.objects.filter(manager=manager)[:5])
+        subordinates_filtered = list(set(subordinates) & set(self._employees))
+        for employee in subordinates_filtered:
+            self.employees_tree.append(employee)
+            self._add_subordinates_to_tree(employee)
+
+    def clear_tree(self):
+        self.employees_tree.clear()

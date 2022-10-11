@@ -1,7 +1,9 @@
+import pickle
+
 from django.http import HttpResponse
 from django.template import loader
 
-from .models import Employee
+from .models import Employee, EmployeeTree
 from .forms import SearchForm
 
 tr_tag_colors = [
@@ -19,10 +21,7 @@ tr_tag_colors = [
 
 def page(request):
     employee_director = Employee.objects.get(hierarchy_level=1)
-    if not Employee.employees_tree:
-        employee_tree = Employee.get_tree()
-    else:
-        employee_tree = Employee.employees_tree
+    employee_tree = EmployeeTree(Employee.objects.all()).employees_tree
     template = loader.get_template('employees/mainpage.html')
     context = {
         'employee_director': employee_director,
@@ -51,17 +50,26 @@ def searchpage(request):
 
 
 def post_searchform(request):
-    return HttpResponse(request)
-#    submitbutton = request.POST.get("submit")
-#
- #   firstname = ''
- #   lastname = ''
- #   emailvalue = ''
-#
- #   form = UserForm(request.POST or None)
- #   if form.is_valid():
- #       firstname = form.cleaned_data.get("first_name")
- #       lastname = form.cleaned_data.get("last_name")
- #       emailvalue = form.cleaned_data.get("email")
+    if request.method == "POST":
+        filters = {
+            'first_name' : request.POST["first_name"],
+            'last_name' : request.POST["last_name"],
+            'middle_name' : request.POST["middle_name"],
+            'position' : request.POST["position"],
+            'employment_date' : request.POST["employment_date"],
+            'salary' : request.POST["salary"],
+        }
+        if not Employee.employees_tree:
+            employee_tree = Employee.get_tree()
+        else:
+            employee_tree = Employee.employees_tree
 
-# 1)
+       # filtered_tree = filter(def ,employee_tree)
+               # (first_name=first_name,
+                #                         last_name=last_name,
+                 #                        middle_name=middle_name,
+                  #                       position=position,
+                   #                      employment_date=employment_date,
+                    #                     salary=salary)
+
+       # return HttpResponse(filtered_tree)
