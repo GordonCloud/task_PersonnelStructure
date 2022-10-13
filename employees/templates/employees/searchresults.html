@@ -1,0 +1,19 @@
+{% if employee_queryset %}
+<table id="tableOrderTotal" class="table tableTotal">
+    <tbody>
+        {% for employee in employee_queryset %}
+        <tr>
+            <td class="employeesTableColumn">{{employee.last_name}}</td>
+            <td class="employeesTableColumn">{{employee.first_name}}</td>
+            <td class="employeesTableColumn">{{employee.middle_name}}</td>
+            <td class="employeesTableColumn">{{employee.position}}</td>
+            <td class="employeesTableColumn">{{employee.employment_date}}</td>
+            <td class="employeesTableColumn">{{employee.salary}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>По вашему запросу не найдено ни одного сотрудника</p>
+{% endif %}
+{% endif %}

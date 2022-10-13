@@ -24,7 +24,7 @@
                 var searchText = $(this).serialize();
                 $.ajax({
                     type: "POST",
-                    url: "{% url 'post_searchform' %}",
+                    url: "{% url 'searchpage' %}",
                     data: searchText,
                     success: function(result){
                         $('#employeesScroll').html(result);
@@ -46,7 +46,7 @@
 <div class="employeesTablePlace margintop20px paddingbottom0px">
     <h4>ПОИСК СОТРУДНИКОВ:</h4>
 
-    {% if employee_tree %}
+    {% if employees_queryset %}
     <table id="tableHead" class="table tableTotal marginbottom0px">
         <tbody>
             <tr>
@@ -57,7 +57,7 @@
                 <td class="employeesTableColumn"><p>Дата принятия</p></td>
                 <td class="employeesTableColumn"><p>Зарплата</p></td>
             </tr>
-            <form id="searchEmployeesForm" action="{% url 'post_searchform' %}" method="post">
+            <form id="searchEmployeesForm" action="{% url 'searchpage' %}" method="post">
                 <tr>
                     <td class="employeesTableColumn">{{ searchform.last_name }}</td>
                     <td class="employeesTableColumn">{{ searchform.first_name }}</td>
@@ -75,7 +75,7 @@
 <div id="employeesScroll" class="employeesTablePlace paddingtop0px">
     <table id="tableOrderTotal" class="table tableTotal">
         <tbody>
-            {% for employee in employee_tree %}
+            {% for employee in employees_queryset %}
             <tr>
                 <td class="employeesTableColumn">{{employee.last_name}}</td>
                 <td class="employeesTableColumn">{{employee.first_name}}</td>
