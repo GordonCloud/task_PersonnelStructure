@@ -13,6 +13,9 @@
     <!-- JavaScript JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- JavaScript JQuery Mask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
     {% load static %}
     <link rel="stylesheet" href="\static\css\searchpage.css">
 
@@ -20,6 +23,8 @@
         $(function(){
 
             $('#searchEmployeesForm').submit(function(formData){
+                employeesScroll.classList.add('hiddenElement');
+                Loading.classList.remove('hiddenElement');
                 formData.preventDefault();
                 var searchText = $(this).serialize();
                 $.ajax({
@@ -27,10 +32,16 @@
                     url: "{% url 'searchpage' %}",
                     data: searchText,
                     success: function(result){
+                        employeesScroll.classList.remove('hiddenElement');
+                        Loading.classList.add('hiddenElement');
                         $('#employeesScroll').html(result);
                     }
                 });
             });
+        });
+
+        $(document).ready(function() {
+            $('input[name="employment_date"]').mask('00/00/0000');
         });
     </script>
 </head>
@@ -90,6 +101,12 @@
     {% else %}
         <p>ERROR: No employees found</p>
     {% endif %}
+</div>
+
+<div class="d-flex justify-content-center">
+    <div id="Loading" class="spinner-border hiddenElement" role="status">
+        <span class="sr-only"></span>
+    </div>
 </div>
 
     <!--===============================================================================================-->
