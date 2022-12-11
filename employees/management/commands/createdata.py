@@ -37,7 +37,7 @@ class EmployeesProvider(faker.providers.BaseProvider):
 
 
 class Command(BaseCommand):
-    help = "The command creates 50 000 faked objects of model Employee"
+    help = "The command creates faked objects of model Employee"
 
     def handle(self, *args, **kwargs):
 

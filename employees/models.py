@@ -21,6 +21,11 @@ class Employee(models.Model):
 
     @classmethod
     def get_tree(cls):
+        '''
+        Рекурсивно проходит по объектам employee,
+        возвращает список объектов следующего вида:
+        [1, 1/1, 1/1/1, 1/1/2, 1/1/3, 1/2, 1/2/1, 1/2/1/1 ...]
+        '''
         second_level_queryset = cls.objects.filter(hierarchy_level=2)
         for employee in second_level_queryset:
             cls.employees_tree.append(employee)
